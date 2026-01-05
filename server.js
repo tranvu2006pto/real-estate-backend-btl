@@ -5,10 +5,9 @@ const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
 
-// ====== MONGODB ======
 const mongoUri = process.env.MONGO_URI;
 if (!mongoUri) {
-  console.error("Vui lòng khai báo biến môi trường MONGO_URI trên Render!");
+  console.error("Vui lòng khai báo MONGO_URI trong Environment Variables trên Render!");
   process.exit(1);
 }
 
@@ -22,7 +21,7 @@ mongoose.connect(mongoUri, {
   process.exit(1);
 });
 
-// ====== SCHEMA ======
+// ===== Schema =====
 const HouseSchema = new mongoose.Schema({
   title: String,
   price: Number,
@@ -32,7 +31,7 @@ const HouseSchema = new mongoose.Schema({
 });
 const House = mongoose.model("House", HouseSchema);
 
-// ====== SERVER ======
+// ===== Server =====
 const server = http.createServer(async (req, res) => {
 
   // POST /api/houses
@@ -42,10 +41,13 @@ const server = http.createServer(async (req, res) => {
     req.on("end", async () => {
       try {
         const data = JSON.parse(body);
+        data.price = Number(data.price);
+        data.size  = Number(data.size);
         await House.create(data);
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify({ message: "Lưu thành công" }));
-      } catch {
+      } catch(err) {
+        console.error("Error creating house:", err);
         res.writeHead(400);
         res.end("Invalid data");
       }
@@ -59,7 +61,8 @@ const server = http.createServer(async (req, res) => {
       const houses = await House.find();
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify(houses));
-    } catch {
+    } catch(err) {
+      console.error(err);
       res.writeHead(500);
       res.end("Server error");
     }
@@ -81,23 +84,30 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // STATIC FILES
+  // Static files
   const filePath = path.join(__dirname, "public", req.url);
-  const ext = path.extname(filePath);
-  const types = {
-    ".css": "text/css",
-    ".js": "application/javascript",
-    ".png": "image/png",
-    ".jpg": "image/jpeg",
-    ".ico": "image/x-icon"
-  };
-  fs.readFile(filePath, (err, content) => {
+  fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {
       res.writeHead(404);
       res.end("Not Found");
     } else {
-      res.writeHead(200, { "Content-Type": types[ext] || "text/plain" });
-      res.end(content);
+      const ext = path.extname(filePath);
+      const types = {
+        ".css": "text/css",
+        ".js": "application/javascript",
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".ico": "image/x-icon"
+      };
+      fs.readFile(filePath, (err, content) => {
+        if (err) {
+          res.writeHead(500);
+          res.end("Server Error");
+        } else {
+          res.writeHead(200, { "Content-Type": types[ext] || "text/plain" });
+          res.end(content);
+        }
+      });
     }
   });
 });
