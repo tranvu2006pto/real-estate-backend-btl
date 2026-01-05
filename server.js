@@ -6,11 +6,21 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 3000;
 
 // ====== MONGODB ======
-mongoose.connect(process.env.MONGO_URI, {
+const mongoUri = process.env.MONGO_URI;
+if (!mongoUri) {
+  console.error("Vui lòng khai báo biến môi trường MONGO_URI trên Render!");
+  process.exit(1);
+}
+
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
-}).then(() => console.log("MongoDB connected"))
-  .catch(err => console.error(err));
+})
+.then(() => console.log("MongoDB connected"))
+.catch(err => {
+  console.error("MongoDB connection error:", err);
+  process.exit(1);
+});
 
 // ====== SCHEMA ======
 const HouseSchema = new mongoose.Schema({
@@ -45,9 +55,15 @@ const server = http.createServer(async (req, res) => {
 
   // GET /api/houses
   if (req.url === "/api/houses" && req.method === "GET") {
-    const houses = await House.find();
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(houses));
+    try {
+      const houses = await House.find();
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(houses));
+    } catch {
+      res.writeHead(500);
+      res.end("Server error");
+    }
+    return;
   }
 
   // GET /
