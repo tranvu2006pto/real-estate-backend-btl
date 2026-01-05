@@ -1,4 +1,3 @@
-<script>
 // ------------------- TAB -------------------
 function openTab(tabId, btn) {
   document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
@@ -83,8 +82,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
     const data = {
       title: form.title.value,
-      price: form.price.value,
-      size: form.size.value,
+      price: Number(form.price.value),
+      size: Number(form.size.value),
       type: form.type.value,
       area: form.area.value
     };
@@ -141,4 +140,3 @@ window.addEventListener("DOMContentLoaded", function () {
   // INIT LOAD
   loadDynamicHouses();
 });
-</script>
