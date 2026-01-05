@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Nguyễn Khắc Tuấn - Bất Động Sản Chuyên Nghiệp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+
+<div class="contact-bar">
+  <span>📍 Địa chỉ: 55 Giải Phóng, P. Bạch Mai, Hai Bà Trưng, Hà Nội</span>
+  <span>👤 Người liên hệ: Nguyễn Khắc Tuấn (27/12/2006)</span>
+</div>
+
+<div class="header">
+  <div class="site-title">NHÀ ĐẤT VIỆT</div>
+  <div class="search-mini">
+    <input placeholder="Tìm nhanh khu vực..." id="quick-search" />
+    <button>Tìm</button>
+  </div>
+</div>
+
+<div class="filter-container">
+  <div class="filter-bar">
+    <div class="filter-group">
+      <label>Loại hình</label>
+      <select id="filter-type">
+        <option value="all">Tất cả</option>
+        <option value="ban">Nhà đất bán</option>
+        <option value="thue">Nhà cho thuê</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Khoảng giá</label>
+      <select id="filter-price">
+        <option value="all">Tất cả</option>
+        <option value="0-5">Dưới 5 tỷ/tr</option>
+        <option value="5-10">5 - 10 tỷ/tr</option>
+        <option value="10+">Trên 10 tỷ/tr</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <label>Diện tích</label>
+      <select id="filter-size">
+        <option value="all">Tất cả</option>
+        <option value="0-50">Dưới 50m²</option>
+        <option value="50-100">50 - 100m²</option>
+        <option value="100+">Trên 100m²</option>
+      </select>
+    </div>
+    <button class="filter-submit">ÁP DỤNG BỘ LỌC</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="box">
+    <div class="tab-menu">
+      <button class="tab-btn active" onclick="openTab('ban', this)">NHÀ ĐẤT BÁN</button>
+      <button class="tab-btn" onclick="openTab('thue', this)">NHÀ CHO THUÊ</button>
+      <button class="tab-btn" onclick="openTab('duan', this)">DỰ ÁN</button>
+    </div>
+
+    <div class="tab-content active" id="ban">
+      <div class="house-grid">
+        <div class="house-card" data-price="6.5" data-size="120">
+          <div class="house-img">
+            <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=400&q=80" alt="Nhà bán">
+          </div>
+          <div class="house-title">Nhà phố Quận 1 - 3 tầng mặt tiền</div>
+          <div class="house-info">3 PN • 120m² • 6.5 Tỷ</div>
+          <div class="seller-info">
+            <p>Người đăng: <strong>Nguyễn Khắc Tuấn</strong></p>
+            <div class="contact-actions">
+              <a href="tel:0987654321" class="call-btn">📞 Gọi ngay</a>
+              <a href="https://zalo.me/0987654321" target="_blank" class="zalo-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" width="18"> Zalo
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="house-card" data-price="9" data-size="150">
+          <div class="house-img">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=400&q=80" alt="Nhà bán">
+          </div>
+          <div class="house-title">Nhà mặt tiền Cầu Giấy - Kinh doanh</div>
+          <div class="house-info">4 PN • 150m² • 9 Tỷ</div>
+          <div class="seller-info">
+            <p>Người đăng: <strong>Nguyễn Khắc Tuấn</strong></p>
+            <div class="contact-actions">
+              <a href="tel:0987654321" class="call-btn">📞 Gọi ngay</a>
+              <a href="https://zalo.me/0987654321" target="_blank" class="zalo-btn">
+                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" width="18"> Zalo
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="thue">
+      <div class="house-grid">
+        <div class="house-card" data-price="10" data-size="70">
+          <div class="house-img">
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=400&q=80" alt="Nhà thuê">
+          </div>
+          <div class="house-title">Căn hộ chung cư cao cấp 2PN</div>
+          <div class="house-info">70m² • 10 triệu/tháng</div>
+          <div class="seller-info">
+            <p>Người đăng: <strong>Nguyễn Khắc Tuấn</strong></p>
+            <div class="contact-actions">
+              <a href="tel:0987654321" class="call-btn">📞 Gọi ngay</a>
+              <a href="https://zalo.me/0987654321" target="_blank" class="zalo-btn">Zalo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box news">
+    <h3>Tin tức Bất động sản</h3>
+    <div id="news-list">Đang cập nhật tin mới...</div>
+    <a class="more-link" href="https://vnexpress.net/bat-dong-san" target="_blank">Xem thêm trên VnExpress</a>
+  </div>
+</div>
+
+<div class="box">
+  <h3>Thêm nhà mới</h3>
+  <form class="house-form">
+    <label>Tiêu đề:
+      <input type="text" name="title" placeholder="Nhập tiêu đề" required>
+    </label>
+    <label>Giá (tỷ):
+      <input type="number" name="price" placeholder="Nhập giá" required>
+    </label>
+    <label>Diện tích (m²):
+      <input type="number" name="size" placeholder="Nhập diện tích" required>
+    </label>
+    <label>Loại hình:
+      <select name="type" required>
+        <option value="">Chọn loại hình</option>
+        <option value="ban">Nhà đất bán</option>
+        <option value="thue">Nhà cho thuê</option>
+      </select>
+    </label>
+    <label>Khu vực:
+      <input type="text" name="area" placeholder="Nhập khu vực" required>
+    </label>
+    <button type="submit">Thêm nhà</button>
+  </form>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
