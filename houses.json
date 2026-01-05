@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Nhà Mặt phố",
+    "price": "36",
+    "size": "3636",
+    "type": "thue",
+    "area": "Hải Phòng"
+  },
+  {
+    "title": "Nhà số 18 ....",
+    "price": "8",
+    "size": "18",
+    "type": "ban",
+    "area": "Hà Tĩnh"
+  },
+  {
+    "title": "Nhà đầu tư HDPE",
+    "price": "18",
+    "size": "180",
+    "type": "ban",
+    "area": "Hà Nội"
+  }
+]
