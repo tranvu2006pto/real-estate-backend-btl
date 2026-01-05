@@ -12,20 +12,20 @@ mongoose.connect(process.env.MONGO_URI, {
 }).then(() => console.log("MongoDB connected"))
   .catch(err => console.error(err));
 
+// ====== SCHEMA ======
 const HouseSchema = new mongoose.Schema({
   title: String,
-  price: Number,   // TỶ
+  price: Number,
   size: Number,
   type: String,
   area: String
 });
-
 const House = mongoose.model("House", HouseSchema);
 
 // ====== SERVER ======
 const server = http.createServer(async (req, res) => {
 
-  // POST
+  // POST /api/houses
   if (req.url === "/api/houses" && req.method === "POST") {
     let body = "";
     req.on("data", c => body += c);
@@ -43,22 +43,38 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  // GET
+  // GET /api/houses
   if (req.url === "/api/houses" && req.method === "GET") {
     const houses = await House.find();
     res.writeHead(200, { "Content-Type": "application/json" });
     return res.end(JSON.stringify(houses));
   }
 
-  // STATIC
-  let filePath = path.join(__dirname, "public", req.url === "/" ? "index.html" : req.url);
+  // GET /
+  if (req.url === "/") {
+    const indexPath = path.join(__dirname, "public", "index.html");
+    fs.readFile(indexPath, (err, content) => {
+      if (err) {
+        res.writeHead(404);
+        res.end("Not Found");
+      } else {
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(content);
+      }
+    });
+    return;
+  }
+
+  // STATIC FILES
+  const filePath = path.join(__dirname, "public", req.url);
   const ext = path.extname(filePath);
   const types = {
-    ".html": "text/html",
     ".css": "text/css",
-    ".js": "application/javascript"
+    ".js": "application/javascript",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".ico": "image/x-icon"
   };
-
   fs.readFile(filePath, (err, content) => {
     if (err) {
       res.writeHead(404);
@@ -70,6 +86,4 @@ const server = http.createServer(async (req, res) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
+server.listen(PORT, () => console.log("Server running on port", PORT));
