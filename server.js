@@ -1,92 +1,75 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 3000;
-const housesFile = path.join(__dirname, "houses.json");
-const publicDir = path.join(__dirname, "public");
 
-// Tạo houses.json nếu chưa tồn tại
-if (!fs.existsSync(housesFile)) {
-  fs.writeFileSync(housesFile, JSON.stringify([]));
-}
+// ====== MONGODB ======
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log("MongoDB connected"))
+  .catch(err => console.error(err));
 
-const mimeTypes = {
-  ".html": "text/html",
-  ".css": "text/css",
-  ".js": "application/javascript",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".svg": "image/svg+xml",
-  ".ico": "image/x-icon"
-};
+const HouseSchema = new mongoose.Schema({
+  title: String,
+  price: Number,   // TỶ
+  size: Number,
+  type: String,
+  area: String
+});
 
-const server = http.createServer((req, res) => {
-  /* ================= API ================= */
+const House = mongoose.model("House", HouseSchema);
 
-  // GET danh sách nhà
-  if (req.url === "/api/houses" && req.method === "GET") {
-    const data = JSON.parse(fs.readFileSync(housesFile));
-    res.writeHead(200, { "Content-Type": "application/json" });
-    return res.end(JSON.stringify(data));
-  }
+// ====== SERVER ======
+const server = http.createServer(async (req, res) => {
 
-  // POST thêm nhà
+  // POST
   if (req.url === "/api/houses" && req.method === "POST") {
     let body = "";
-    req.on("data", chunk => body += chunk);
-    req.on("end", () => {
+    req.on("data", c => body += c);
+    req.on("end", async () => {
       try {
-        const house = JSON.parse(body);
-        const data = JSON.parse(fs.readFileSync(housesFile));
-        data.push(house);
-        fs.writeFileSync(housesFile, JSON.stringify(data, null, 2));
+        const data = JSON.parse(body);
+        await House.create(data);
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Lưu thành công!" }));
+        res.end(JSON.stringify({ message: "Lưu thành công" }));
       } catch {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Dữ liệu không hợp lệ" }));
+        res.writeHead(400);
+        res.end("Invalid data");
       }
     });
     return;
   }
 
-  /* ============== FRONTEND ============== */
+  // GET
+  if (req.url === "/api/houses" && req.method === "GET") {
+    const houses = await House.find();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify(houses));
+  }
 
-  let filePath =
-    req.url === "/"
-      ? path.join(publicDir, "index.html")
-      : path.join(publicDir, req.url);
-
-  const ext = path.extname(filePath).toLowerCase();
+  // STATIC
+  let filePath = path.join(__dirname, "public", req.url === "/" ? "index.html" : req.url);
+  const ext = path.extname(filePath);
+  const types = {
+    ".html": "text/html",
+    ".css": "text/css",
+    ".js": "application/javascript"
+  };
 
   fs.readFile(filePath, (err, content) => {
     if (err) {
-      // fallback: mọi route không phải api đều trả index.html
-      if (!req.url.startsWith("/api")) {
-        const indexPath = path.join(publicDir, "index.html");
-        fs.readFile(indexPath, (e, indexContent) => {
-          if (e) {
-            res.writeHead(500);
-            res.end("Server error");
-          } else {
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.end(indexContent);
-          }
-        });
-      } else {
-        res.writeHead(404);
-        res.end("Not Found");
-      }
+      res.writeHead(404);
+      res.end("Not Found");
     } else {
-      res.writeHead(200, {
-        "Content-Type": mimeTypes[ext] || "text/plain"
-      });
+      res.writeHead(200, { "Content-Type": types[ext] || "text/plain" });
       res.end(content);
     }
   });
 });
 
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log("Server running on port", PORT);
 });
