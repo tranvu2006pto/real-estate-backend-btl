@@ -1,0 +1,77 @@
+:root {
+  --primary: #2563eb;
+  --secondary: #16a34a;
+  --zalo: #0068ff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --glass: rgba(255, 255, 255, 0.7);
+}
+
+* { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+body {
+  margin: 0;
+  background: url("background.jpg") no-repeat center center fixed;
+  background-size: cover;
+  color: var(--text);
+}
+
+/* CONTACT BAR */
+.contact-bar {
+  background: rgba(15, 23, 42, 0.95);
+  color: white;
+  padding: 12px 20px;
+  display: flex;
+  justify-content: space-around;
+  font-size: 13px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+/* HEADER */
+.header { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+.site-title { font-size: 32px; font-weight: 900; color: white; text-shadow: 0 4px 12px rgba(0,0,0,0.4); letter-spacing: -1px; }
+
+/* FILTER */
+.filter-container { max-width: 1200px; margin: 0 auto 30px; padding: 0 20px; }
+.filter-bar { background: var(--glass); backdrop-filter: blur(15px); padding: 25px; border-radius: 20px; display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-end; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border: 1px solid rgba(2, 2, 2, 0.3); }
+.filter-group { display: flex; flex-direction: column; gap: 6px; }
+.filter-group label { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; }
+.filter-group select { padding: 10px 15px; border-radius: 10px; border: 1px solid #e2e8f0; min-width: 160px; outline: none; background: rgb(243, 235, 235); }
+.filter-submit { background: var(--primary); color: rgb(255, 255, 255); border: none; padding: 12px 25px; border-radius: 10px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+.filter-submit:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+/* MAIN LAYOUT */
+.container { max-width: 1200px; margin: auto; padding: 0 20px 50px; display: grid; grid-template-columns: 2.5fr 1fr; gap: 30px; }
+.box { background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+
+/* TABS */
+.tab-menu { border-bottom: 2px solid rgba(57, 56, 56, 0.05); margin-bottom: 25px; display: flex; gap: 10px; }
+.tab-btn { padding: 12px 20px; border: none; background: none; font-weight: 800; color: var(--muted); cursor: pointer; border-radius: 10px 10px 0 0; transition: 0.3s; }
+.tab-btn.active { color: var(--primary); border-bottom: 3px solid var(--primary); background: rgba(37, 99, 235, 0.05); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+
+/* HOUSE CARDS */
+.house-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.house-card { background: rgb(215, 213, 204); padding: 15px; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); transition: 0.3s; border: 1px solid #f1f5f9; }
+.house-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+.house-img img { width: 100%; height: 180px; object-fit: cover; border-radius: 12px; }
+.house-title { font-weight: 800; margin: 15px 0 5px; font-size: 17px; color: var(--text); }
+.house-info { color: var(--primary); font-weight: 700; font-size: 15px; margin-bottom: 12px; }
+
+/* CONTACT BUTTONS */
+.contact-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 15px; }
+.call-btn, .zalo-btn { text-align: center; padding: 10px; border-radius: 10px; color: white !important; text-decoration: none; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.call-btn { background: var(--secondary); }
+.zalo-btn { background: var(--zalo); }
+
+/* NEWS */
+.news-item { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+.news-title { text-decoration: none; color: var(--text); font-weight: 600; font-size: 14px; transition: 0.2s; }
+.news-title:hover { color: var(--primary); }
+.more-link { display: block; text-align: center; margin-top: 20px; color: var(--primary); font-weight: 700; text-decoration: none; font-size: 14px; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

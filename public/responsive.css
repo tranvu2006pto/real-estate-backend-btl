@@ -1,0 +1,157 @@
+/* ===== TABLET ===== */
+@media (max-width: 992px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .house-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-bar {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .contact-bar {
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-mini {
+    width: 100%;
+  }
+
+  .filter-bar {
+    flex-direction: column;
+  }
+
+  .house-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-menu {
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    flex: 1 1 48%;
+  }
+}
+/* ===== MOBILE S (320px) ===== */
+@media (max-width: 360px) {
+
+  /* Chống scroll ngang */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Header + search */
+  .search-mini {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+  }
+
+  .search-mini input,
+  .search-mini button {
+    width: 100%;
+  }
+
+  /* Filter */
+  .filter-group {
+    width: 100%;
+  }
+
+  .filter-group select {
+    width: 100%;
+  }
+
+  .filter-submit {
+    width: 100%;
+  }
+
+  /* Tab menu */
+  .tab-btn {
+    flex: 1 1 100%;
+    font-size: 14px;
+  }
+
+  /* Card nhà */
+  .house-card {
+    width: 100%;
+  }
+
+  .house-info,
+  .house-title {
+    font-size: 14px;
+  }
+}
+/* ===== BOX THÊM NHÀ MỚI CUỐI WEB ===== */
+.house-form {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  max-width: 400px;
+  margin: 20px auto; /* căn giữa */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.house-form h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.house-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.house-form input,
+.house-form select {
+  width: 100%;
+  padding: 6px 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.house-form button {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.house-form button:hover {
+  background-color: #0056b3;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .house-form {
+    width: 90%;
+    margin: 15px auto;
+    padding: 10px;
+  }
+}
